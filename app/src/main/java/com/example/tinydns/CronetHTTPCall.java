@@ -69,7 +69,6 @@ public class CronetHTTPCall extends UrlRequest.Callback {
         //val bodyBytes = bytesReceived.toByteArray()
         byte[] bodyBytes = bytesReceived.toByteArray();
         onSucceeded(request, info, bodyBytes);
-        //onSucceeded(request, info, bodyBytes)
     }
 
     public void onSucceeded(UrlRequest request, UrlResponseInfo info, byte[] bodyBytes) {
@@ -77,6 +76,6 @@ public class CronetHTTPCall extends UrlRequest.Callback {
 
     @Override
     public void onFailed(UrlRequest request, UrlResponseInfo info, CronetException error) {
-
+        Log.i(TAG, "onFailed method called. Error: " + error.getCause());
     }
 }
