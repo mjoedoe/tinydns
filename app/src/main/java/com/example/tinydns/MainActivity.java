@@ -3,90 +3,108 @@ package com.example.tinydns;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
-import org.chromium.net.CronetEngine;
-import org.chromium.net.CronetException;
-import org.chromium.net.UrlRequest;
-import org.chromium.net.UrlResponseInfo;
-
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "tinydns";
     private TextView textfield;
-    private CronetEngine cronetEngine;
-    private Executor croExecutor;
+
+    private String ServerURL = "https://172.17.0.2:5000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "Starting app.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textfield = (TextView) findViewById(R.id.textfield);
         textfield.setText("reqContent");
 
-        CronetEngine.Builder builder = new CronetEngine.Builder(this);
-        croExecutor = Executors.newSingleThreadExecutor();
-        ByteBuffer reqBuffer = ByteBuffer.allocate(400);
+        Thread httpCall = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String response = makeHttpRequest(ServerURL + "/authenticate");
+                    Log.d(TAG, "response" + response);
+                    // Perform UI updates on the main thread
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textfield.setText(response); // Update the UI element
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-        // Load custom X.509 server certificate.
-        try {
-            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-            FileInputStream certificateFileInputStream = new FileInputStream("/path/to/your/certificate.crt");
-            X509Certificate certificate = (X509Certificate) certificateFactory.generateCertificate(certificateFileInputStream);
-            builder.addRootCertificate(certificate);
+            }
+        });
+        httpCall.start();
+    }
 
-        } catch (CertificateException | IOException e) {
+    private String makeHttpRequest(String urlStr) throws IOException {
+        Log.d(TAG, "Starting request.");
+        String response = "";
+        URL url = new URL(urlStr);
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        connection.setHostnameVerifier((hostname, session)-> true);
+        // Set request method to POST
+        connection.setRequestMethod("POST");
+
+        // Enable output for sending data
+        connection.setDoOutput(true);
+
+/*        try {
+            KeyStore keyStore = getKeyStore(context);
+
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(keyStore);
+
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            keyManagerFactory.init(keyStore, "pasword".toCharArray());
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
+
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+        } catch (KeyStoreException | IOException | CertificateException | NoSuchAlgorithmException | UnrecoverableKeyException | KeyManagementException e) {
             e.printStackTrace();
+        }*/
+
+        // Optional: Set headers or parameters if needed
+        // connection.setRequestProperty("Authorization", "Bearer your_token");
+
+        int responseCode = connection.getResponseCode();
+        Log.d(TAG, "Response code: " + responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = connection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+
+            bufferedReader.close();
+            response = stringBuilder.toString();
         }
 
-        // Create Cronet Enginge and executor for HTTP requests.
-        this.cronetEngine = builder.build();
-        CronetHTTPCall cronetCallback = new CronetHTTPCall() {
-            @Override
-            public void onSucceeded(UrlRequest request, UrlResponseInfo info, byte[] bodyBytes) {
-                // Parse the request result and update the UI.
-                //String dataStr = new String(bodyBytes, StandardCharsets.UTF_8);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textfield.setText("Request finished with " + info.getHttpStatusCode());
+        Log.d(TAG, "finished request");
 
-                        //textfield.setText(dataStr);
-                    }
-                });
-
-            }
-            @Override
-            public void onFailed(UrlRequest request, UrlResponseInfo info, CronetException error) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textfield.setText("Request finished with " + info.getHttpStatusCode());
-                    }
-                });
-            }
-        };
-        // @todo cronet supports only https traffic. So server needs to run https. -> Does now but still fails.
-
-        UrlRequest.Builder requestBuilder = cronetEngine.newUrlRequestBuilder("https://https://172.17.0.2:5000", cronetCallback, croExecutor);
-        // Add server certificate.
-
-        UrlRequest request = requestBuilder.build();
-        request.start();
+        connection.disconnect();
+        return response;
     }
-    public CronetEngine getCronetEngine() {
-        return cronetEngine;
-    }
+
 }
