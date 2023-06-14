@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".queriesFragment">
+
+    <!-- Define table headers -->
+    <TableRow>
+        <TextView
+            android:text="Source"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:text="Destination"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:text="VT Score"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+    </TableRow>
+
+</TableLayout>
