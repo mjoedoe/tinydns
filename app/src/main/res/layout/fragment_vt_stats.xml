@@ -9,6 +9,109 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="@string/vt_stats_description" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/teal_700">
+        <!-- Define table headers -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#0079D6">
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Time frame"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="used"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Available"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/queries_cell_border"
+            android:padding="4dp">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Requests this hour"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:id="@+id/requests_hour_used"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:id="@+id/requests_hour_available"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DAE8FC">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Requests today"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:id="@+id/requests_today_used"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:id="@+id/requests_today_available"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DAE8FC"
+            android:padding="4dp">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:text="Requests this month"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:id="@+id/requests_month_used"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:id="@+id/requests_month_available"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+        </TableRow>
+    </TableLayout>
 
 </FrameLayout>

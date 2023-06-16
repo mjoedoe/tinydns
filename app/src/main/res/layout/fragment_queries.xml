@@ -8,16 +8,25 @@
     tools:context=".queriesFragment">
 
     <!-- Define table headers -->
-    <TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <TextView
-            android:text="Source"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="Server"
             android:padding="8dp"
             android:textStyle="bold"/>
         <TextView
-            android:text="Destination"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="Query"
             android:padding="8dp"
             android:textStyle="bold"/>
         <TextView
+            android:layout_width="0dip"
+            android:layout_weight="1"
             android:text="VT Score"
             android:padding="8dp"
             android:textStyle="bold"/>

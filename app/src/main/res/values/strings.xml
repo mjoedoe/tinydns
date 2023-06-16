@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">tinydns</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">This is the home fragment</string>
+    <string name="hello_blank_fragment">This is the home fragment (put animation)</string>
     <string name="title_activity_main1">MainActivity1</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,4 +14,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="vt_stats_description">Your Virus Total Stats</string>
 </resources>

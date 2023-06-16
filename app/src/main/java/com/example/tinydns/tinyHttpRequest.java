@@ -31,7 +31,9 @@ public class tinyHttpRequest {
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setHostnameVerifier((hostname, session)-> true);
 
-            if (Objects.equals(urlStr, "/authenticate")){        // Set request method to POST
+            if (Objects.equals(urlStr, "/authenticate")){
+                Log.d(TAG, "makeHttpRequest: authenticate");
+                // Set request method to POST
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Type", "application/json");
 
@@ -56,11 +58,15 @@ public class tinyHttpRequest {
                 outputStream.flush();
                 outputStream.close();
 
+            } else if ( Objects.equals(ServerURL, "https://www.virustotal.com")) {
+                Log.d(TAG, "makeHttpRequest: vt api");
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("x-apikey", "8b8678da15a4914750bb15197396717147bb9af6b11461651ecb2b47ff263a06");
+                connection.setRequestProperty("Content-Type", "application/json");
+                Log.d(TAG, "makeHttpRequest: "+ url.toString());
             } else {
                 connection.setRequestMethod("GET");
-                Log.d(TAG, "Starting request. in try block get");
                 connection.setRequestProperty("Content-Type", "application/json");
-
             }
 
             int responseCode = connection.getResponseCode();
