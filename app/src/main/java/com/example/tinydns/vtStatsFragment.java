@@ -37,7 +37,7 @@ public class vtStatsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final String VT_API_KEY = "8b8678da15a4914750bb15197396717147bb9af6b11461651ecb2b47ff263a06";
+    private static final String VT_API_KEY = "apikey";
     private static final String ServerURL = "https://www.virustotal.com";
     private static final String TAG = "tinyDNS vtStatsFragment";
     private String mParam1;

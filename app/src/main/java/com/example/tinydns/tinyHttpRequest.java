@@ -61,7 +61,7 @@ public class tinyHttpRequest {
             } else if ( Objects.equals(ServerURL, "https://www.virustotal.com")) {
                 Log.d(TAG, "makeHttpRequest: vt api");
                 connection.setRequestMethod("GET");
-                connection.setRequestProperty("x-apikey", "8b8678da15a4914750bb15197396717147bb9af6b11461651ecb2b47ff263a06");
+                connection.setRequestProperty("x-apikey", "api_key");
                 connection.setRequestProperty("Content-Type", "application/json");
                 Log.d(TAG, "makeHttpRequest: "+ url.toString());
             } else {

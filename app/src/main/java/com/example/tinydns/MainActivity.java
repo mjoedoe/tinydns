@@ -26,34 +26,13 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         // Create an instance of the Fragment
-        queriesFragment qFragment = queriesFragment.newInstance("asd", "das");
+        homeFragment hFragment = homeFragment.newInstance("asd", "das");
 
         // Add the fragment to the transaction
-        fragmentTransaction.add(R.id.fragment_container , qFragment, "queriesFragment");
+        fragmentTransaction.add(R.id.fragment_container , hFragment, "homeFragment");
 
         // Commit the transaction
         fragmentTransaction.commit();
-/*        tinyHttpRequest tHttp = new tinyHttpRequest(ServerURL);
-
-        Thread httpCall = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String response = tHttp.makeHttpRequest("/authenticate");
-                Log.d(TAG, "response " + response);
-
-                String newresponse = tHttp.makeHttpRequest("/queries_raw");
-                Log.d(TAG, "response chart " + newresponse);
-                // Perform UI updates on the main thread
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d(TAG, "response in run ");
-                        //textfield.setText(newresponse); // Update the UI element
-                    }
-                });
-            }
-        });
-        httpCall.start();*/
     }
 
     @Override

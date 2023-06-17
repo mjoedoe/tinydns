@@ -1,13 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/homeLayout"
     android:layout_height="match_parent"
     tools:context=".homeFragment">
 
-    <!-- TODO: Update blank home fragment layout -->
-    <TextView
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-</FrameLayout>
+        android:layout_height="wrap_content">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart"
+            android:layout_height="219dp"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/headingTextView"
+            app:layout_constraintVertical_bias="0.16" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="Destination"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="Total Count"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="VirusTotal Score"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="VT last checked"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+    </TableRow>
+</TableLayout>
